@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Stock - Products</title></head>
+<body>
+<h1>Products</h1>
+<p><a href="{{ url_for('add_product') }}">Add product</a></p>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul>
+    {% for cat, msg in messages %}
+      <li><strong>{{ cat }}</strong>: {{ msg }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<ul>
+{% for p in products %}
+  <li>
+    <h3>{{ p['name'] }} - {{ p['price'] }}</h3>
+    {% if p['image'] %}
+      <img src="{{ url_for('uploaded_file', filename=p['image']) }}" alt="img" style="max-width:150px">
+    {% endif %}
+    <p>{{ p['description'] }}</p>
+  </li>
+{% else %}
+  <li>No products yet.</li>
+{% endfor %}
+</ul>
+</body>
+</html>
